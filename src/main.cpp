@@ -1,4 +1,5 @@
-#include "pdf-format.h"
+#include "pdf-format.hpp"
+#include "common.hpp"
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -6,19 +7,27 @@
 
 int main(int argc, char* argv[]) {
 
-	if (argc != 2) {
+	if (argc != 2)
+  {
 		std::cout << "Usage : pdfviewer [pdf-file]" << std::endl;
-		return 1;
+		return jklim::ec::invalid_arguments;
 	}
 
 	std::fstream file;
 	file.open(argv[1], std::ios_base::binary | std::ios_base::in);
 
-	version ver = getVersion(file);
+  int err;
+	jklim::version ver;
+  if (jklim::ec::no_error != (err = jklim::getVersion(file, ver)))
+  {
+    return err;
+  }
 
-	std::cout << "PDF Version : " << ver.major << "." << ver.minor << std::endl;
+	std::cout << ver << std::endl;
 
 	file.close();
+
+  std::cout << "press enter to exit...";
 	std::cin.get();
 	
 	return 0;
