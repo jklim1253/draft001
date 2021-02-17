@@ -3,24 +3,23 @@
 #include <iostream>
 #include <iomanip>
 #include <exception>
-using namespace std;
 
 int main(int argc, char* argv[]) {
 
 	if (argc != 2) {
-		cout << "Usage : pdfviewer [pdf-file]" << endl;
+		std::cout << "Usage : pdfviewer [pdf-file]" << std::endl;
 		return 1;
 	}
 
-	fstream file;
-	file.open(argv[1], ios_base::binary | ios_base::in);
+	std::fstream file;
+	file.open(argv[1], std::ios_base::binary | std::ios_base::in);
 
 	version ver = getVersion(file);
 
-	cout << "PDF Version : " << ver.major << "." << ver.minor << endl;
+	std::cout << "PDF Version : " << ver.major << "." << ver.minor << std::endl;
 
 	file.close();
-	cin.get();
+	std::cin.get();
 	
 	return 0;
 }
