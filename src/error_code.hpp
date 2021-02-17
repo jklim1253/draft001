@@ -13,7 +13,9 @@ enum ec : int
   invalid_arguments,
 
   // codes associated with file
+  file_not_found,
   file_not_opened,
+  file_format_is_not_supported,
 };
 
 } // namespace jklim
