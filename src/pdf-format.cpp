@@ -1,18 +1,21 @@
 #include "pdf-format.hpp"
 #include "common.hpp"
+#include "console.hpp"
 
-#include <functional>
 #include <iostream>
+#include <sstream>
 
 namespace jklim
 {
 
 std::ostream& operator << (std::ostream& _os, version const& _ver)
 {
-  _os << "PDF Version: "
-      << _ver.major
-      << '.'
-      << _ver.minor;
+  std::stringstream ss;
+  ss << "PDF Version: "
+     << _ver.major
+     << '.'
+     << _ver.minor;
+  con << ss.str();
   return _os;
 }
 
@@ -26,7 +29,7 @@ int getVersion(std::fstream& file, version& _ver)
   }
 
   std::streampos checkpoint;
-  AtLast<std::function<void()>, std::function<void()>> rewinder
+  atlast_easy rewinder
   (
     [&checkpoint, &file]()
     {
